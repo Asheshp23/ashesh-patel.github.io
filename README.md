@@ -1,32 +1,37 @@
-<h1 align="center">Hi 👋, <br>
- I'm Ashesh Patel
-</h1>
-<h3 align="center">Passionate iOS Developer with over two years of experience creating user-friendly applications using Swift, SwiftUI, and UIKit.</h3>
+# Ashesh Patel
+## iOS Developer
 
-<p align="left"> <img src="https://komarev.com/ghpvc/?username=asheshp23&label=Profile%20views&color=0e75b6&style=flat" alt="asheshp23" /> </p>
+**Swift • SwiftUI • MVVM Architecture • Performance Optimization**
 
-<p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=asheshp23" alt="asheshp23" /></a> </p>
+iOS developer with experience building enterprise applications for the healthcare and agriculture sectors. Specializing in API integration, automated testing, and Swift package development.
 
-- 🔭 I’m currently working on the JournalAI app, gudPromptiOS app, HearingTestApp and other new features from WWDC25. 
--  I have a prompt collection for [SwiftPromptKit: iOS Developer's AI Prompt Toolkit](https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140)
-   and breathwork exercises [🧘🏽‍♀️ Breath Work Essentials: Your Stress Relief Toolkit 🧘🏽](https://gudprompt.com/c/breath-work-exercises-44565957)
+## Featured Projects
 
-- I have also been contributing to [vibecoder.me](https://vibecoder.me/) as a creator. 
+**SwiftPromptKit** 
+- AI prompt toolkit for iOS developers ([View Collection](https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140))
+- Curated prompts for Swift code generation and debugging
+- 447 views,391 viewers, 29 submissions, 3 bookmarks for this collection.
 
-- 👨‍💻 All of my projects are available at [https://github.com/Asheshp23](https://github.com/Asheshp23)
+**JournalAI** 
+- AI-powered journaling with Core Data persistence and SwiftUI animations
+- Implemented functional model on the device LLM model.
 
-- 📫 How to reach me **asheshp23@gmail.com**
+**HearingTestApp** 
+- Medical-grade audiometry testing application
+- Real-time audio processing with AVAudioEngine  
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-<a href="https://linkedin.com/in/asheshp23" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="asheshp23" height="30" width="40" /></a>
-</p>
+**Enterprise Swift Packages** 
+- Reusable components for production apps
+- MapKit integration utilities
+- OAuth 2.0 authentication wrapper for Salesforce
+- RESTful API networking layer
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left">
- <a href="https://developer.apple.com/swift/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/swift/swift-original.svg" alt="swift" width="40" height="40"/> </a> 
-<a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://www.figma.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="40" height="40"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="40" height="40"/> </a> <a href="https://git-scm.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/git-scm/git-scm-icon.svg" alt="git" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://www.invisionapp.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/invisionapp/invisionapp-icon.svg" alt="invision" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.microsoft.com/en-us/sql-server" target="_blank" rel="noreferrer"> <img src="https://www.svgrepo.com/show/303229/microsoft-sql-server-logo.svg" alt="mssql" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> <a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/ProgrammingWithObjectiveC/Introduction/Introduction.html" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/apple_objectivec/apple_objectivec-icon.svg" alt="objectivec" width="40" height="40"/> </a> <a href="https://postman.com" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/getpostman/getpostman-icon.svg" alt="postman" width="40" height="40"/> </a>
+## Technical Experience
 
+**Architecture:** MVVM, Swift Package Manager, dependency injection  
+**Testing:** Unit testing, UI testing, automated CI/CD pipelines  
+**Backend:** Firebase, RESTful APIs, Socket.IO, GraphQL  
+**Performance:** Memory optimization, build time reduction, crash analytics
 
-<p>&nbsp;<img align="center" src="https://github-readme-stats.vercel.app/api?username=asheshp23&show_icons=true&locale=en" alt="asheshp23" /></p>
-
+## Contact
+📧 asheshp23@gmail.com | 💼 [LinkedIn](https://linkedin.com/in/asheshp23)
