@@ -1,5 +1,5 @@
 <h1 align="center">Hi 👋, <br>
- I'm Asheshkumar B Patel
+ I'm Ashesh Patel
 </h1>
 <h3 align="center">Passionate iOS Developer with over two years of experience creating user-friendly applications using Swift, SwiftUI, and UIKit.</h3>
 
@@ -7,9 +7,11 @@
 
 <p align="left"> <a href="https://github.com/ryo-ma/github-profile-trophy"><img src="https://github-profile-trophy.vercel.app/?username=asheshp23" alt="asheshp23" /></a> </p>
 
-- 🔭 I’m currently working on [Weather App](https://github.com/Asheshp23/WeatherApp)
+- 🔭 I’m currently working on the JournalAI app, gudPromptiOS app, HearingTestApp and other new features from WWDC25. 
+-  I have a prompt collection for [SwiftPromptKit: iOS Developer's AI Prompt Toolkit](https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140)
+   and breathwork exercises [🧘🏽‍♀️ Breath Work Essentials: Your Stress Relief Toolkit 🧘🏽](https://gudprompt.com/c/breath-work-exercises-44565957)
 
-- 🌱 I’m currently learning **Vision OS**
+- I have also been contributing to [vibecoder.me](https://vibecoder.me/) as a creator. 
 
 - 👨‍💻 All of my projects are available at [https://github.com/Asheshp23](https://github.com/Asheshp23)
 
