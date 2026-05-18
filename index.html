@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ashesh Patel — iOS Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #faf9f7;
+      --surface: #ffffff;
+      --border: #e8e4de;
+      --border-light: #f0ede8;
+      --text: #1a1816;
+      --muted: #6b6560;
+      --subtle: #9e9790;
+      --accent: #c96a2e;
+      --accent-bg: #fdf3ec;
+      --tag-bg: #f2efe9;
+      --tag-text: #6b6560;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111110;
+        --surface: #1a1917;
+        --border: #2a2825;
+        --border-light: #222120;
+        --text: #f0ede8;
+        --muted: #9e9790;
+        --subtle: #6b6560;
+        --accent: #e07d42;
+        --accent-bg: #1f1510;
+        --tag-bg: #201e1b;
+        --tag-text: #9e9790;
+      }
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    nav {
+      position: sticky; top: 0; z-index: 50;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      padding: 0 40px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 56px;
+    }
+    .nav-name { font-size: 14px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; }
+    .nav-links { display: flex; gap: 4px; }
+    .nav-links a {
+      font-size: 13px; color: var(--muted);
+      padding: 6px 12px; border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-links a:hover { background: var(--tag-bg); color: var(--text); }
+
+    .page { max-width: 760px; margin: 0 auto; padding: 0 40px; }
+
+    .hero { padding: 80px 0 64px; border-bottom: 1px solid var(--border); }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 12px; color: var(--accent); font-weight: 500;
+      letter-spacing: 0.04em; text-transform: uppercase; margin-bottom: 20px;
+    }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--accent);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(40px, 7vw, 62px);
+      font-weight: 400; line-height: 1.1; letter-spacing: -1.5px;
+      color: var(--text); margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: italic; color: var(--muted); }
+    .hero-desc { font-size: 15px; color: var(--muted); max-width: 520px; line-height: 1.7; margin-bottom: 28px; }
+    .hero-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 32px; }
+    .pill {
+      font-size: 12px; font-weight: 500; color: var(--tag-text);
+      background: var(--tag-bg); border: 1px solid var(--border);
+      border-radius: 100px; padding: 4px 12px;
+    }
+    .hero-links { display: flex; gap: 10px; flex-wrap: wrap; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 500; padding: 9px 18px;
+      border-radius: 8px; transition: all 0.15s; cursor: pointer;
+    }
+    .btn-primary { background: var(--text); color: var(--bg); }
+    .btn-primary:hover { opacity: 0.82; }
+    .btn-outline { border: 1px solid var(--border); color: var(--muted); }
+    .btn-outline:hover { border-color: var(--subtle); color: var(--text); }
+
+    .section { padding: 60px 0; border-bottom: 1px solid var(--border); }
+    .section:last-child { border-bottom: none; }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 36px; }
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 26px; font-weight: 400; letter-spacing: -0.5px; color: var(--text);
+    }
+    .section-count { font-size: 12px; color: var(--subtle); }
+
+    .project-list { display: flex; flex-direction: column; }
+    .project {
+      padding: 22px 0; border-top: 1px solid var(--border-light);
+      display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;
+    }
+    .project:first-child { border-top: none; }
+    .project-header { display: flex; align-items: center; gap: 10px; margin-bottom: 5px; }
+    .project-name { font-size: 15px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; }
+    .badge {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 4px;
+    }
+    .badge-store { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(201,106,46,0.2); }
+    .badge-oss { background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--border); }
+    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
+    .project-bullets { list-style: none; display: flex; flex-direction: column; gap: 2px; }
+    .project-bullets li {
+      font-size: 12px; color: var(--subtle); padding-left: 14px; position: relative;
+    }
+    .project-bullets li::before { content: '–'; position: absolute; left: 0; color: var(--border); }
+    .project-link {
+      font-size: 12px; color: var(--accent); font-weight: 500;
+      white-space: nowrap; margin-top: 2px;
+      display: inline-flex; align-items: center; gap: 4px; transition: opacity 0.15s;
+    }
+    .project-link:hover { opacity: 0.7; }
+    .project-link-col { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+
+    .skills-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 36px; }
+    @media (max-width: 540px) { .skills-cols { grid-template-columns: 1fr; } }
+    .skill-group-title {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--subtle); margin-bottom: 10px;
+    }
+    .skill-items { display: flex; flex-direction: column; gap: 5px; }
+    .skill-row {
+      font-size: 13px; color: var(--muted);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .skill-row::before {
+      content: ''; width: 4px; height: 4px; border-radius: 50%;
+      background: var(--border); flex-shrink: 0;
+    }
+
+    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    @media (max-width: 540px) { .tool-grid { grid-template-columns: 1fr; } }
+    .tool-card {
+      border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px;
+      transition: border-color 0.15s; display: flex; flex-direction: column; gap: 4px;
+    }
+    .tool-card:hover { border-color: var(--subtle); }
+    .tool-name { font-size: 13px; font-weight: 500; color: var(--text); }
+    .tool-desc { font-size: 12px; color: var(--subtle); }
+
+    .pkg-row {
+      padding: 14px 0; border-top: 1px solid var(--border-light);
+      font-size: 13px; color: var(--muted);
+    }
+    .pkg-row strong { color: var(--text); font-weight: 500; }
+
+    .contact-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+
+    footer {
+      padding: 28px 40px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .footer-text { font-size: 12px; color: var(--subtle); }
+
+    @media (max-width: 600px) {
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+      .page { padding: 0 20px; }
+      .hero { padding: 48px 0 40px; }
+      .section { padding: 48px 0; }
+      .project { grid-template-columns: 1fr; }
+      footer { padding: 24px 20px; flex-direction: column; gap: 6px; text-align: center; }
+    }
+
+    .reveal { opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-name">Ashesh Patel</span>
+  <div class="nav-links">
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </div>
+</nav>
+
+<div class="page">
+
+  <div class="hero reveal">
+    <div class="hero-eyebrow"><span class="dot"></span>iOS Developer</div>
+    <h1>Building native iOS apps<br><em>people actually use.</em></h1>
+    <p class="hero-desc">
+      Enterprise experience in healthcare and agriculture, shipping apps used by hundreds of professionals daily. Focused on clean Swift architecture, API integration, and on-device AI.
+    </p>
+    <div class="hero-stack">
+      <span class="pill">Swift</span>
+      <span class="pill">SwiftUI</span>
+      <span class="pill">MVVM</span>
+      <span class="pill">Firebase</span>
+      <span class="pill">On-Device AI</span>
+      <span class="pill">MapKit</span>
+      <span class="pill">Swift Package Manager</span>
+    </div>
+    <div class="hero-links">
+      <a href="https://github.com/Asheshp23" target="_blank" class="btn btn-primary">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/asheshp23" target="_blank" class="btn btn-outline">LinkedIn</a>
+      <a href="mailto:asheshp23@gmail.com" class="btn btn-outline">Email</a>
+    </div>
+  </div>
+
+  <section class="section" id="projects">
+    <div class="section-header reveal">
+      <h2 class="section-title">Projects</h2>
+      <span class="section-count">5 apps</span>
+    </div>
+    <div class="project-list">
+
+      <div class="project reveal">
+        <div>
+          <div class="project-header">
+            <span class="project-name">WiDonate</span>
+            <span class="badge badge-store">App Store</span>
+          </div>
+          <p class="project-desc">Charitable giving platform enabling round-up donations with each purchase, supporting nonprofits and athletic programs.</p>
+          <ul class="project-bullets">
+            <li>Seamless payment integration for frictionless micro-donations</li>
+            <li>Intuitive UX for effortless charitable contributions</li>
+          </ul>
+        </div>
+        <a href="https://apps.apple.com/us/app/widonate/id6752963961" target="_blank" class="project-link">
+          App Store <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
+        </a>
+      </div>
+
+      <div class="project reveal">
+        <div>
+          <div class="project-header">
+            <span class="project-name">Deveron Field Ops</span>
+            <span class="badge badge-store">App Store</span>
+          </div>
+          <p class="project-desc">Agriculture field management application serving 500+ farms with real-time mapping and data collection tools.</p>
+          <ul class="project-bullets">
+            <li>Integrated MapKit and built custom Swift packages</li>
+            <li>Reduced app build times by 30% through dependency optimization</li>
+          </ul>
+        </div>
+        <a href="https://apps.apple.com/us/app/deveron-field-ops/id1589186774" target="_blank" class="project-link">
+          App Store <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
+        </a>
+      </div>
+
+      <div class="project reveal">
+        <div>
+          <div class="project-header">
+            <span class="project-name">Deveron Lab Ops</span>
+            <span class="badge badge-store">App Store</span>
+          </div>
+          <p class="project-desc">Laboratory workflow management for agricultural testing facilities with real-time data sync.</p>
+          <ul class="project-bullets">
+            <li>RESTful API integration and real-time data synchronization</li>
+            <li>Automated testing pipeline for production reliability</li>
+          </ul>
+        </div>
+        <a href="https://apps.apple.com/us/app/deveron-lab-ops/id1600213314" target="_blank" class="project-link">
+          App Store <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
+        </a>
+      </div>
+
+      <div class="project reveal">
+        <div>
+          <div class="project-header">
+            <span class="project-name">JournalAI & JournalAnalyzer</span>
+            <span class="badge badge-oss">Open Source</span>
+          </div>
+          <p class="project-desc">Privacy-focused journaling with on-device AI analysis — no cloud dependencies, all processing stays on device.</p>
+          <ul class="project-bullets">
+            <li>Local LLM processing for complete user privacy</li>
+            <li>AI-powered entry enhancement and mood analysis</li>
+          </ul>
+        </div>
+        <div class="project-link-col">
+          <a href="https://github.com/Asheshp23/JournalAI" target="_blank" class="project-link">JournalAI <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg></a>
+          <a href="https://github.com/Asheshp23/JournalAnalyzer" target="_blank" class="project-link">JournalAnalyzer <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg></a>
+        </div>
+      </div>
+
+      <div class="project reveal">
+        <div>
+          <div class="project-header">
+            <span class="project-name">HearingTestApp</span>
+            <span class="badge badge-oss">Open Source</span>
+          </div>
+          <p class="project-desc">Medical-grade audiometry testing for healthcare professionals with clinically calibrated audio processing.</p>
+          <ul class="project-bullets">
+            <li>Real-time audio processing with AVAudioEngine</li>
+            <li>Calibrated frequency response for clinical accuracy</li>
+          </ul>
+        </div>
+        <a href="https://github.com/Asheshp23/Hearing-Test-App" target="_blank" class="project-link">
+          GitHub <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <section class="section" id="tools">
+    <div class="section-header reveal">
+      <h2 class="section-title">AI prompt tools</h2>
+    </div>
+    <div class="tool-grid">
+      <a href="https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140" target="_blank" class="tool-card reveal">
+        <span class="tool-name">SwiftPromptKit</span>
+        <span class="tool-desc">Swift code generation prompts for iOS developers</span>
+      </a>
+      <a href="https://gudprompt.com/c/prompts-for-meditation-92835967" target="_blank" class="tool-card reveal">
+        <span class="tool-name">Guided Meditation</span>
+        <span class="tool-desc">Mindfulness and meditation prompt collection</span>
+      </a>
+      <a href="https://gudprompt.com/c/breath-work-exercises-44565957" target="_blank" class="tool-card reveal">
+        <span class="tool-name">Breath Work Essentials</span>
+        <span class="tool-desc">Stress relief and breathwork exercise prompts</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section" id="skills">
+    <div class="section-header reveal">
+      <h2 class="section-title">Technical skills</h2>
+    </div>
+    <div class="skills-cols">
+      <div class="reveal">
+        <div class="skill-group-title">Language & UI</div>
+        <div class="skill-items">
+          <div class="skill-row">Swift & SwiftUI</div>
+          <div class="skill-row">UIKit</div>
+          <div class="skill-row">Combine & async/await</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-group-title">Architecture</div>
+        <div class="skill-items">
+          <div class="skill-row">MVVM, Clean Architecture</div>
+          <div class="skill-row">Swift Package Manager</div>
+          <div class="skill-row">Dependency injection</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-group-title">Backend & Data</div>
+        <div class="skill-items">
+          <div class="skill-row">Firebase</div>
+          <div class="skill-row">RESTful APIs, GraphQL</div>
+          <div class="skill-row">Socket.IO, Core Data</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-group-title">Testing & Performance</div>
+        <div class="skill-items">
+          <div class="skill-row">Unit & UI testing</div>
+          <div class="skill-row">CI/CD pipelines</div>
+          <div class="skill-row">Memory & build optimization</div>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="skill-group-title">iOS Frameworks</div>
+        <div class="skill-items">
+          <div class="skill-row">MapKit</div>
+          <div class="skill-row">AVAudioEngine, HealthKit</div>
+          <div class="skill-row">Foundation Models (on-device AI)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="section-header reveal">
+      <h2 class="section-title">Enterprise Swift packages</h2>
+    </div>
+    <div class="reveal">
+      <div class="pkg-row"><strong>OAuth 2.0 Salesforce wrapper</strong> — Authentication package for Salesforce integration</div>
+      <div class="pkg-row"><strong>RESTful networking layer</strong> — API client with structured error handling and retry logic</div>
+      <div class="pkg-row"><strong>MapKit utilities</strong> — Location-based helpers and annotation management for field apps</div>
+    </div>
+  </section>
+
+  <section class="section" id="contact" style="border-bottom:none; padding-bottom: 80px;">
+    <div class="section-header reveal">
+      <h2 class="section-title">Get in touch</h2>
+    </div>
+    <div class="contact-row reveal">
+      <a href="mailto:asheshp23@gmail.com" class="btn btn-primary">asheshp23@gmail.com</a>
+      <a href="https://linkedin.com/in/asheshp23" target="_blank" class="btn btn-outline">LinkedIn</a>
+      <a href="https://github.com/Asheshp23" target="_blank" class="btn btn-outline">GitHub</a>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span class="footer-text">Ashesh Patel — iOS Developer</span>
+  <span class="footer-text">asheshp23.github.io</span>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('in'), i * 55);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.06 });
+  els.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
