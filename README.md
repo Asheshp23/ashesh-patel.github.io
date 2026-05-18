@@ -7,24 +7,41 @@ iOS developer with experience building enterprise applications for the healthcar
 
 ## Featured Projects
 
-**SwiftPromptKit** 
-- AI prompt toolkit for iOS developers ([View Collection](https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140))
-- Curated prompts for Swift code generation and debugging
-- 447 views,391 viewers, 29 submissions, 3 bookmarks for this collection.
+**WiDonate** - [App Store](https://apps.apple.com/us/app/widonate/id6752963961)
+- Charitable giving platform enabling round-up donations with each purchase.
+- Built seamless payment integration supporting nonprofits and athletic programs.
+- Developed an intuitive user experience for effortless charitable contributions.
 
-**JournalAI** 
-- AI-powered journaling with Core Data persistence and SwiftUI animations
-- Implemented functional model on the device LLM model.
+**Deveron Field Ops** - [App Store](https://apps.apple.com/us/app/deveron-field-ops/id1589186774)
+- Agriculture field management application for 500+ farms.
+- Integrated MapKit and built custom Swift packages.
+- Reduced app build times by 30% through dependency optimization.
 
-**HearingTestApp** 
-- Medical-grade audiometry testing application
-- Real-time audio processing with AVAudioEngine  
+**Deveron Lab Ops** - [App Store](https://apps.apple.com/us/app/deveron-lab-ops/id1600213314)
+- Laboratory workflow management serving agricultural testing facilities.
+- Implemented real-time data synchronization and RESTful API integration.
+- Developed an automated testing pipeline for production reliability.
 
-**Enterprise Swift Packages** 
-- Reusable components for production apps
-- MapKit integration utilities
-- OAuth 2.0 authentication wrapper for Salesforce
-- RESTful API networking layer
+**JournalAI** - [GitHub](https://github.com/Asheshp23/JournalAI) & **JournalAnalyzer** [GitHub](https://github.com/Asheshp23/JournalAnalyzer.git)
+- Privacy-focused journaling app with on-device AI analysis and enhancement of journal entries.
+- Local LLM processing without cloud dependencies.
+
+**HearingTestApp** - [GitHub](https://github.com/Asheshp23/Hearing-Test-App)
+- Medical-grade audiometry testing for healthcare professionals.
+- Real-time audio processing with AVAudioEngine.
+- Calibrated frequency response for clinical accuracy.
+
+**AI Development Tools**
+- Swift code generation prompts for iOS developers
+  - [SwiftPromptKit: iOS Developer's AI Prompt Toolkit](https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140)
+- Mindfulness and breath work guidance prompts
+  - [Guided Meditation & Mindfulness Prompts](https://gudprompt.com/c/prompts-for-meditation-92835967)
+  - [Breath Work Essentials: Your Stress Relief Toolkit](https://gudprompt.com/c/breath-work-exercises-44565957)
+
+**Enterprise Swift Packages**
+- OAuth 2.0 authentication wrapper for Salesforce integration.
+- RESTful API networking layer with error handling.
+- MapKit utilities for location-based applications.
 
 ## Technical Experience
 
@@ -35,3 +52,4 @@ iOS developer with experience building enterprise applications for the healthcar
 
 ## Contact
 📧 asheshp23@gmail.com | 💼 [LinkedIn](https://linkedin.com/in/asheshp23)
+
