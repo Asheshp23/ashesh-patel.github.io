@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ashesh Patel — iOS Developer</title>
+  <title>Ashesh Patel - iOS Developer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
@@ -130,6 +130,14 @@
     }
     .badge-store { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(201,106,46,0.2); }
     .badge-oss { background: var(--tag-bg); color: var(--tag-text); border: 1px solid var(--border); }
+    .badge-new {
+      background: #edfaf3; color: #2a9d5c; border: 1px solid rgba(42,157,92,0.25);
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 4px;
+    }
+    @media (prefers-color-scheme: dark) {
+      .badge-new { background: #0d1f15; color: #4ade80; border-color: rgba(74,222,128,0.2); }
+    }
     .project-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 8px; }
     .project-bullets { list-style: none; display: flex; flex-direction: column; gap: 2px; }
     .project-bullets li {
@@ -239,9 +247,28 @@
   <section class="section" id="projects">
     <div class="section-header reveal">
       <h2 class="section-title">Projects</h2>
-      <span class="section-count">5 apps</span>
+      <span class="section-count">6 apps</span>
     </div>
     <div class="project-list">
+
+      <div class="project reveal">
+        <div>
+          <div class="project-header">
+            <span class="project-name">Mindful Prism</span>
+            <span class="badge badge-store">App Store</span>
+            <span class="badge badge-new">New</span>
+          </div>
+          <p class="project-desc">AI-powered reflection tool that helps you untangle your thoughts. Write what is on your mind - Apple Intelligence helps you see it differently. Fully on-device, completely private.</p>
+          <ul class="project-bullets">
+            <li>Built on Apple Intelligence via FoundationModels - no cloud, no backend</li>
+            <li>On-device processing ensures complete user privacy</li>
+            <li>Designed for clarity in moments when your mind will not quiet down</li>
+          </ul>
+        </div>
+        <a href="https://apps.apple.com/us/app/mindful-prism/id6772832020" target="_blank" class="project-link">
+          App Store <svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
+        </a>
+      </div>
 
       <div class="project reveal">
         <div>
@@ -300,7 +327,7 @@
             <span class="project-name">JournalAI & JournalAnalyzer</span>
             <span class="badge badge-oss">Open Source</span>
           </div>
-          <p class="project-desc">Privacy-focused journaling with on-device AI analysis — no cloud dependencies, all processing stays on device.</p>
+          <p class="project-desc">Privacy-focused journaling with on-device AI analysis - no cloud dependencies, all processing stays on device.</p>
           <ul class="project-bullets">
             <li>Local LLM processing for complete user privacy</li>
             <li>AI-powered entry enhancement and mood analysis</li>
@@ -405,9 +432,9 @@
       <h2 class="section-title">Enterprise Swift packages</h2>
     </div>
     <div class="reveal">
-      <div class="pkg-row"><strong>OAuth 2.0 Salesforce wrapper</strong> — Authentication package for Salesforce integration</div>
-      <div class="pkg-row"><strong>RESTful networking layer</strong> — API client with structured error handling and retry logic</div>
-      <div class="pkg-row"><strong>MapKit utilities</strong> — Location-based helpers and annotation management for field apps</div>
+      <div class="pkg-row"><strong>OAuth 2.0 Salesforce wrapper</strong> - Authentication package for Salesforce integration</div>
+      <div class="pkg-row"><strong>RESTful networking layer</strong> - API client with structured error handling and retry logic</div>
+      <div class="pkg-row"><strong>MapKit utilities</strong> - Location-based helpers and annotation management for field apps</div>
     </div>
   </section>
 
@@ -425,7 +452,7 @@
 </div>
 
 <footer>
-  <span class="footer-text">Ashesh Patel — iOS Developer</span>
+  <span class="footer-text">Ashesh Patel - iOS Developer</span>
   <span class="footer-text">asheshp23.github.io</span>
 </footer>
 
