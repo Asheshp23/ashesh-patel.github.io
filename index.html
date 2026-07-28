@@ -67,6 +67,7 @@ a { color: inherit; text-decoration: none; }
 #vine { position: absolute; z-index: 4; left: 0; top: 0; bottom: 0; width: 132px; pointer-events: none; }
 #vine svg.stem-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
 #vine path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.stem-ghost { stroke: var(--fern); stroke-width: 1.4; stroke-dasharray: 2 8; opacity: .22; }
 .stem { stroke: var(--fern); stroke-width: 2.4; stroke-dasharray: 1; }
 .root { stroke: var(--fern); stroke-width: 1.3; stroke-dasharray: 1; opacity: .55; }
 
@@ -102,7 +103,38 @@ a { color: inherit; text-decoration: none; }
 #hud-name { top: 30px; left: 190px; color: var(--stone); letter-spacing: .22em; text-transform: uppercase; }
 #hud-frame { top: 30px; right: 40px; text-align: right; }
 #hud-frame b { color: var(--moss); font-weight: 400; }
-#hint { position: absolute; z-index: 7; bottom: 30px; right: 40px; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--ash); text-transform: lowercase; }
+
+/* first-visit scroll cue — a seed running down a stem */
+#cue {
+  position: absolute; z-index: 7; bottom: 26px; left: 50%;
+  transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  pointer-events: none; transition: opacity .5s ease;
+  animation: cue-bob 3.4s ease-in-out infinite;
+}
+.cue-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .22em;
+  color: var(--stone); text-transform: lowercase;
+}
+.cue-stem {
+  position: relative; display: block; width: 1px; height: 34px;
+  background: linear-gradient(180deg, var(--edge-up), transparent);
+  overflow: visible;
+}
+.cue-drop {
+  position: absolute; left: 50%; top: 0;
+  width: 6px; height: 6px; margin-left: -3px; border-radius: 60% 0 60% 0;
+  background: var(--moss); box-shadow: 0 0 8px rgba(156,188,126,.5);
+  animation: cue-fall 1.9s cubic-bezier(.5,0,.5,1) infinite;
+}
+@keyframes cue-fall {
+  0%   { transform: translateY(0) rotate(45deg) scale(.4); opacity: 0; }
+  22%  { opacity: 1; }
+  78%  { opacity: 1; }
+  100% { transform: translateY(30px) rotate(45deg) scale(1); opacity: 0; }
+}
+@keyframes cue-bob { 0%,100% { transform: translateX(-50%) translateY(0); } 50% { transform: translateX(-50%) translateY(5px); } }
+@media (prefers-reduced-motion: reduce) { #cue { display: none; } }
 
 /* ── hero ──────────────────────────────────────────────────── */
 .eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--pollen); margin-bottom: 30px; will-change: transform, opacity; }
@@ -207,7 +239,7 @@ h1 em { font-style: italic; color: var(--moss); font-variation-settings: 'SOFT' 
   .frame { padding: 84px 22px 84px 78px; }
   #hud-name { left: 78px; font-size: 9px; }
   #hud-frame { right: 22px; font-size: 9px; }
-  #hint { right: 22px; }
+  #cue { bottom: 20px; }
   .deck { height: 400px; }
   .card { padding: 26px 24px; border-radius: 30px 5px 30px 5px; }
   .card-desc { max-width: 100%; }
@@ -228,7 +260,7 @@ h1 em { font-style: italic; color: var(--moss); font-variation-settings: 'SOFT' 
   .card, .card *, .pill, .btn, .tile, .pkg-row, .head, h1 .w, .lede, .eyebrow, #contact h2, #contact p {
     opacity: 1 !important; transform: none !important;
   }
-  #vine, #hud-frame, #hint, .wash { display: none; }
+  #vine, #hud-frame, #cue, .wash { display: none; }
   #hud-name { position: static; display: block; padding: 40px 40px 0; }
 }
 </style>
@@ -322,7 +354,11 @@ h1 em { font-style: italic; color: var(--moss); font-variation-settings: 'SOFT' 
       <div id="grain"></div>
       <div class="hud" id="hud-name">Ashesh Patel</div>
       <div class="hud" id="hud-frame">frame <b id="frame-num">0000</b> / 1000</div>
-      <div id="hint">scroll to grow</div>
+
+      <div id="cue" aria-hidden="true">
+        <span class="cue-label">scroll to grow</span>
+        <span class="cue-stem"><i class="cue-drop"></i></span>
+      </div>
 
     </div>
   </div>
@@ -520,7 +556,8 @@ h1 em { font-style: italic; color: var(--moss); font-variation-settings: 'SOFT' 
   const contactH = document.querySelector('[data-el="contact-h"]');
   const contactP = document.querySelector('[data-el="contact-p"]');
   const contactBtns = [...$('#contact-links').children];
-  const frameNum = $('#frame-num'), projIdx = $('#proj-idx'), hint = $('#hint');
+  const frameNum = $('#frame-num'), projIdx = $('#proj-idx'), cue = $('#cue');
+  let dismissed = false;   // once the user scrolls, the cue never returns
 
   /* ── setters ─────────────────────────────────────────────── */
   const set = (n, o, t) => { n.style.opacity = o; n.style.transform = t; };
@@ -581,7 +618,7 @@ h1 em { font-style: italic; color: var(--moss); font-variation-settings: 'SOFT' 
           set(n, pt, 'scale(' + mix(0.7, 1, pt).toFixed(3) + ') rotate(' + mix(jitter(i + 7) * 9, 0, pt).toFixed(2) + 'deg)');
         });
         heroBtns.forEach((n, i) => rise(n, span(t, 0.64 + i * 0.035, 0.78 + i * 0.035), 16));
-        hint.style.opacity = (1 - span(t, 0.05, 0.18)).toFixed(3);
+        cue.style.opacity = dismissed ? 0 : (1 - span(t, 0.02, 0.12)).toFixed(3);
       }
     }
 
@@ -694,11 +731,70 @@ h1 em { font-style: italic; color: var(--moss); font-variation-settings: 'SOFT' 
   }
   function onScroll() { if (!queued) { queued = true; requestAnimationFrame(tick); } }
   function scrollToFrame(f) {
+    userTookOver();
     const max = track.scrollHeight - viewport.clientHeight;
     viewport.scrollTo({ top: (f / FRAMES) * max, behavior: 'smooth' });
   }
 
-  viewport.addEventListener('scroll', onScroll, { passive: true });
+  /* ── first-visit onboarding ──────────────────────────────── */
+  // A one-time "tease": if the visitor hasn't scrolled within a few
+  // seconds, the scene gently grows a little and settles back, proving
+  // that scrolling drives it. It moves the real scroll position, so the
+  // frame render stays perfectly in sync. Any genuine input cancels it.
+  let teasing = false, teaseTimer = null, teaseRAF = null;
+
+  function dismissCue() {
+    if (dismissed) return;
+    dismissed = true;
+    cue.style.opacity = 0;
+    clearTimeout(teaseTimer);
+  }
+
+  function tease() {
+    if (dismissed || teasing) return;
+    const max = track.scrollHeight - viewport.clientHeight;
+    const peak = (18 / FRAMES) * max;              // ~18 frames of growth
+    const dur = 1500, hold = 620, start = performance.now();
+    teasing = true;
+    const ease = t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+    const step = now => {
+      if (!teasing) return;
+      const e = now - start;
+      let y;
+      if (e < dur) y = peak * ease(e / dur);                 // grow out
+      else if (e < dur + hold) y = peak;                     // hold
+      else if (e < dur * 2 + hold) y = peak * (1 - ease((e - dur - hold) / dur)); // settle back
+      else { viewport.scrollTop = 0; teasing = false; return; }
+      viewport.scrollTop = y;
+      teaseRAF = requestAnimationFrame(step);
+    };
+    teaseRAF = requestAnimationFrame(step);
+  }
+
+  function cancelTease() {
+    if (teaseRAF) cancelAnimationFrame(teaseRAF);
+    teasing = false;
+  }
+
+  // any of these = a real visitor taking over
+  function userTookOver() {
+    cancelTease();
+    dismissCue();
+  }
+  ['wheel', 'touchstart', 'keydown', 'pointerdown'].forEach(ev =>
+    window.addEventListener(ev, userTookOver, { passive: true, once: true })
+  );
+
+  // arm the tease, unless reduced motion is requested
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    teaseTimer = setTimeout(tease, 3000);
+  }
+
+  viewport.addEventListener('scroll', () => {
+    onScroll();
+    // a scroll the visitor caused (not our tease) retires the cue
+    if (!teasing && viewport.scrollTop > 4) userTookOver();
+  }, { passive: true });
   window.addEventListener('resize', () => { last = -1; tick(); });
   window.addEventListener('keydown', e => {
     const step = { ArrowDown: 12, ArrowUp: -12, PageDown: 60, PageUp: -60 }[e.key];
