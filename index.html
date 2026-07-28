@@ -1,631 +1,715 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Ashesh Patel - iOS Developer</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Ashesh Patel — iOS Developer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Instrument+Sans:wght@400;500&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    :root {
-      --bg: #07080f;
-      --glass-bg: rgba(255,255,255,0.04);
-      --glass-bg-hover: rgba(255,255,255,0.07);
-      --glass-border: rgba(255,255,255,0.10);
-      --glass-border-bright: rgba(255,255,255,0.18);
-      --text: #f0eef8;
-      --muted: rgba(220,215,240,0.55);
-      --subtle: rgba(200,195,225,0.35);
-      --accent1: #a78bfa;
-      --accent2: #38bdf8;
-      --accent3: #f472b6;
-      --accent-gold: #fbbf24;
-      --new-green: #4ade80;
-    }
+:root {
+  /* soil → canopy */
+  --loam:    #0d1210;
+  --bark:    rgba(156,188,126,0.045);
+  --bark-up: rgba(156,188,126,0.075);
+  --edge:    rgba(156,188,126,0.16);
+  --edge-up: rgba(156,188,126,0.30);
+  --moss:    #9cbc7e;
+  --fern:    #6f9159;
+  --pollen:  #e0b25e;
+  --dogrose: #d091a2;
+  --lichen:  #dfe6d5;
+  --stone:   rgba(223,230,213,0.54);
+  --ash:     rgba(223,230,213,0.30);
 
-    html { scroll-behavior: smooth; }
+  --display: 'Fraunces', Georgia, 'Times New Roman', serif;
+  --body: 'Instrument Sans', system-ui, -apple-system, sans-serif;
+  --mono: 'Fragment Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+}
 
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
+html, body { height: 100%; }
+body {
+  background: var(--loam);
+  color: var(--lichen);
+  font-family: var(--body);
+  font-size: 15px;
+  line-height: 1.62;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+}
+a { color: inherit; text-decoration: none; }
 
-    /* Ambient orbs background */
-    .bg-orbs {
-      position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
-    }
-    .orb {
-      position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.18;
-      animation: drift 20s ease-in-out infinite alternate;
-    }
-    .orb1 { width: 600px; height: 600px; background: #7c3aed; top: -150px; left: -150px; animation-delay: 0s; }
-    .orb2 { width: 500px; height: 500px; background: #0284c7; top: 30%; right: -100px; animation-delay: -7s; }
-    .orb3 { width: 400px; height: 400px; background: #be185d; bottom: 10%; left: 20%; animation-delay: -14s; }
-    .orb4 { width: 300px; height: 300px; background: #d97706; bottom: 30%; right: 10%; animation-delay: -5s; }
-    @keyframes drift {
-      from { transform: translate(0, 0) scale(1); }
-      to { transform: translate(40px, 30px) scale(1.08); }
-    }
+.serif {
+  font-family: var(--display);
+  font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 120;
+  font-weight: 300;
+}
 
-    /* Noise texture overlay */
-    body::before {
-      content: '';
-      position: fixed; inset: 0; z-index: 1; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-      opacity: 0.4;
-    }
+/* ── scroll driver ─────────────────────────────────────────── */
+#viewport { position: relative; height: 100vh; overflow-y: auto; overflow-x: hidden; scrollbar-width: none; -webkit-overflow-scrolling: touch; }
+#viewport::-webkit-scrollbar { width: 0; height: 0; }
+#track { height: 900vh; position: relative; }
+#stage { position: sticky; top: 0; height: 100vh; width: 100%; overflow: hidden; }
 
-    a { color: inherit; text-decoration: none; }
+/* ── light through canopy ──────────────────────────────────── */
+.wash { position: absolute; border-radius: 50%; filter: blur(110px); pointer-events: none; will-change: transform; }
+.wash-a { width: 780px; height: 640px; background: #3f6b3a; opacity: .30; top: -220px; left: -180px; }
+.wash-b { width: 620px; height: 700px; background: #8a6a2c; opacity: .17; bottom: -240px; right: -160px; }
+#grain {
+  position: absolute; inset: 0; pointer-events: none; z-index: 5; opacity: .55; mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 220 220' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.075'/%3E%3C/svg%3E");
+}
 
-    /* Nav */
-    nav {
-      position: sticky; top: 0; z-index: 100;
-      backdrop-filter: blur(24px) saturate(180%);
-      -webkit-backdrop-filter: blur(24px) saturate(180%);
-      background: rgba(7,8,15,0.7);
-      border-bottom: 1px solid var(--glass-border);
-      padding: 0 40px;
-      display: flex; align-items: center; justify-content: space-between;
-      height: 56px;
-    }
-    .nav-name {
-      font-size: 14px; font-weight: 500; letter-spacing: -0.01em;
-      background: linear-gradient(90deg, var(--accent1), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .nav-links { display: flex; gap: 4px; }
-    .nav-links a {
-      font-size: 13px; color: var(--muted);
-      padding: 6px 12px; border-radius: 8px;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-    }
-    .nav-links a:hover {
-      background: var(--glass-bg);
-      border-color: var(--glass-border);
-      color: var(--text);
-    }
+/* ── the vine: navigation, progress and signature in one ───── */
+#vine { position: absolute; z-index: 4; left: 0; top: 0; bottom: 0; width: 132px; pointer-events: none; }
+#vine svg.stem-svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+#vine path { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.stem { stroke: var(--fern); stroke-width: 2.4; stroke-dasharray: 1; }
+.root { stroke: var(--fern); stroke-width: 1.3; stroke-dasharray: 1; opacity: .55; }
 
-    .page { max-width: 780px; margin: 0 auto; padding: 0 40px; position: relative; z-index: 2; }
+.node {
+  position: absolute; z-index: 6; pointer-events: auto;
+  transform: translate(-50%, -50%);
+  background: none; border: none; padding: 0; cursor: pointer;
+  display: flex; align-items: center; gap: 11px;
+}
+.node .seed { width: 7px; height: 7px; border-radius: 50%; background: var(--fern); flex: none; will-change: transform; }
+.node .leaf { width: 26px; height: 26px; flex: none; will-change: transform, opacity; }
+.node .leaf path { stroke: var(--moss); stroke-width: 1.3; fill: rgba(156,188,126,0.10); }
+.node .leaf line { stroke: var(--moss); stroke-width: .9; opacity: .5; }
+.node .name {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: lowercase;
+  color: var(--stone); white-space: nowrap; will-change: opacity;
+}
+.node:hover .leaf path { fill: rgba(156,188,126,0.24); }
+.node:focus-visible { outline: 1px solid var(--moss); outline-offset: 6px; border-radius: 4px; }
+#bloom { position: absolute; z-index: 6; transform: translate(-50%,-50%); will-change: transform, opacity; pointer-events: none; }
 
-    /* Glass card mixin */
-    .glass {
-      background: var(--glass-bg);
-      backdrop-filter: blur(20px) saturate(160%);
-      -webkit-backdrop-filter: blur(20px) saturate(160%);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-    }
-    .glass:hover {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-bright);
-    }
+/* ── frames ────────────────────────────────────────────────── */
+.frame {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; align-items: center;
+  padding: 96px 56px 96px 190px;
+  will-change: transform, opacity;
+}
+.frame-inner { width: 100%; max-width: 760px; }
 
-    /* Hero */
-    .hero { padding: 90px 0 70px; }
-    .hero-eyebrow {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--accent1); margin-bottom: 24px;
-    }
-    .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent1);
-      box-shadow: 0 0 8px var(--accent1);
-      animation: pulse 2s ease infinite;
-    }
-    @keyframes pulse { 0%,100%{opacity:1; box-shadow: 0 0 8px var(--accent1);} 50%{opacity:.5; box-shadow: 0 0 20px var(--accent1);} }
+/* ── hud ───────────────────────────────────────────────────── */
+.hud { position: absolute; z-index: 7; font-family: var(--mono); font-size: 10px; letter-spacing: .12em; color: var(--ash); }
+#hud-name { top: 30px; left: 190px; color: var(--stone); letter-spacing: .22em; text-transform: uppercase; }
+#hud-frame { top: 30px; right: 40px; text-align: right; }
+#hud-frame b { color: var(--moss); font-weight: 400; }
+#hint { position: absolute; z-index: 7; bottom: 30px; right: 40px; font-family: var(--mono); font-size: 10px; letter-spacing: .2em; color: var(--ash); text-transform: lowercase; }
 
-    .hero h1 {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(42px, 7vw, 68px);
-      font-weight: 400; line-height: 1.05; letter-spacing: -2px;
-      color: var(--text); margin-bottom: 22px;
-    }
-    .hero h1 em {
-      font-style: italic;
-      background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 50%, var(--accent3) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero-desc { font-size: 15px; color: var(--muted); max-width: 520px; line-height: 1.75; margin-bottom: 30px; font-weight: 300; }
+/* ── hero ──────────────────────────────────────────────────── */
+.eyebrow { display: inline-flex; align-items: center; gap: 10px; font-family: var(--mono); font-size: 10px; letter-spacing: .14em; color: var(--pollen); margin-bottom: 30px; will-change: transform, opacity; }
+h1 {
+  font-family: var(--display); font-weight: 300;
+  font-variation-settings: 'SOFT' 80, 'WONK' 1, 'opsz' 144;
+  font-size: clamp(42px, 6.8vw, 72px); line-height: 1.02; letter-spacing: -1.5px;
+  margin-bottom: 26px;
+}
+h1 .w { display: inline-block; transform-origin: 50% 100%; will-change: transform, opacity; }
+h1 em { font-style: italic; color: var(--moss); font-variation-settings: 'SOFT' 100, 'WONK' 1, 'opsz' 144; }
+.lede { font-size: 15px; color: var(--stone); max-width: 500px; line-height: 1.78; margin-bottom: 32px; will-change: transform, opacity; }
+.pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
+.pill {
+  font-size: 11.5px; color: var(--stone); background: var(--bark);
+  border: 1px solid var(--edge); border-radius: 100px 100px 100px 3px;
+  padding: 5px 15px; transform-origin: 0% 100%; will-change: transform, opacity;
+}
+.links { display: flex; gap: 10px; flex-wrap: wrap; }
+.btn { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 500; padding: 11px 22px; border-radius: 100px; will-change: transform, opacity; }
+.btn-seed { background: var(--moss); color: #12180f; }
+.btn-seed:hover { background: #b0cc93; }
+.btn-bare { border: 1px solid var(--edge); color: var(--stone); }
+.btn-bare:hover { border-color: var(--edge-up); color: var(--lichen); }
 
-    .hero-stack { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
-    .pill {
-      font-size: 11px; font-weight: 500; letter-spacing: 0.02em;
-      color: var(--muted);
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 100px; padding: 5px 14px;
-      backdrop-filter: blur(10px);
-      transition: all 0.2s;
-    }
-    .pill:hover { border-color: var(--glass-border-bright); color: var(--text); }
+/* ── section heads ─────────────────────────────────────────── */
+.head { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 28px; will-change: transform, opacity; }
+.head h2 { font-family: var(--display); font-weight: 300; font-variation-settings: 'SOFT' 70, 'WONK' 1, 'opsz' 96; font-size: 32px; letter-spacing: -.4px; }
+.head .count { font-family: var(--mono); font-size: 10.5px; color: var(--ash); letter-spacing: .1em; }
+.head .count b { color: var(--pollen); font-weight: 400; }
 
-    .hero-links { display: flex; gap: 10px; flex-wrap: wrap; }
-    .btn {
-      display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13px; font-weight: 500; padding: 10px 20px;
-      border-radius: 12px; transition: all 0.2s; cursor: pointer;
-      font-family: 'DM Sans', sans-serif;
-    }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--accent1), var(--accent2));
-      color: #fff;
-      box-shadow: 0 0 24px rgba(167,139,250,0.3);
-    }
-    .btn-primary:hover { box-shadow: 0 0 36px rgba(167,139,250,0.5); transform: translateY(-1px); }
-    .btn-outline {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      color: var(--muted);
-      backdrop-filter: blur(10px);
-    }
-    .btn-outline:hover { border-color: var(--glass-border-bright); color: var(--text); transform: translateY(-1px); }
+/* ── project deck ──────────────────────────────────────────── */
+.deck { position: relative; height: 306px; }
+.card {
+  position: absolute; inset: 0;
+  background: var(--bark); border: 1px solid var(--edge);
+  border-radius: 40px 6px 40px 6px;
+  padding: 32px 36px;
+  backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+  display: flex; flex-direction: column;
+  transform-origin: 0% 50%; will-change: transform, opacity;
+}
+.card:nth-child(even) { border-radius: 6px 40px 6px 40px; }
+.card .ord {
+  position: absolute; top: 26px; right: 34px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: .16em; color: var(--ash);
+}
+.card-top { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 10px; }
+.card-name { font-family: var(--display); font-variation-settings: 'SOFT' 60, 'WONK' 1, 'opsz' 48; font-weight: 400; font-size: 23px; letter-spacing: -.3px; }
+.tag { font-family: var(--mono); font-size: 9px; letter-spacing: .09em; padding: 3px 9px; border-radius: 100px; }
+.tag-store { color: var(--pollen); border: 1px solid rgba(224,178,94,.3); }
+.tag-oss { color: var(--moss); border: 1px solid rgba(156,188,126,.3); }
+.tag-new { color: var(--dogrose); border: 1px solid rgba(208,145,162,.35); }
+.card-desc { font-size: 13.5px; color: var(--stone); line-height: 1.72; margin-bottom: 15px; max-width: 88%; }
+.card-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-bottom: auto; }
+.card-bullets li { font-size: 12.5px; color: var(--ash); padding-left: 18px; position: relative; will-change: transform, opacity; }
+.card-bullets li::before { content: ''; position: absolute; left: 0; top: 7px; width: 6px; height: 6px; border-radius: 60% 0 60% 0; background: var(--fern); }
+.card-links { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 20px; }
+.card-link { font-size: 12px; color: var(--moss); display: inline-flex; align-items: center; gap: 6px; padding: 7px 15px; border-radius: 100px; border: 1px solid rgba(156,188,126,.24); }
+.card-link:hover { background: rgba(156,188,126,.10); border-color: var(--edge-up); }
 
-    /* Sections */
-    .section { padding: 64px 0; }
-    .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
-    .section-title {
-      font-family: 'DM Serif Display', serif;
-      font-size: 28px; font-weight: 400; letter-spacing: -0.5px;
-      background: linear-gradient(90deg, var(--text) 60%, var(--muted));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .section-count { font-size: 11px; color: var(--subtle); letter-spacing: 0.05em; }
+/* ── grids ─────────────────────────────────────────────────── */
+.grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.tile {
+  background: var(--bark); border: 1px solid var(--edge); border-radius: 26px 4px 26px 4px;
+  padding: 20px 22px; display: flex; flex-direction: column; gap: 6px;
+  transform-origin: 50% 100%; will-change: transform, opacity;
+}
+.tile:nth-child(even) { border-radius: 4px 26px 4px 26px; }
+.tile:hover { background: var(--bark-up); border-color: var(--edge-up); }
+.tile-name { font-size: 13.5px; font-weight: 500; }
+.tile-desc { font-size: 12px; color: var(--ash); }
+.tile-title { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; color: var(--pollen); margin-bottom: 12px; }
+.tile-row { font-size: 13px; color: var(--stone); display: flex; align-items: center; gap: 9px; }
+.tile-row::before { content: ''; width: 5px; height: 5px; border-radius: 60% 0 60% 0; background: var(--fern); flex: none; }
 
-    /* Projects */
-    .project-list { display: flex; flex-direction: column; gap: 2px; }
-    .project {
-      padding: 22px 24px;
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 16px;
-      display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: start;
-      transition: all 0.25s;
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      margin-bottom: 8px;
-    }
-    .project:hover {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-bright);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
-    }
-    .project-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; flex-wrap: wrap; }
-    .project-name { font-size: 15px; font-weight: 500; color: var(--text); letter-spacing: -0.01em; }
+.pkg { display: flex; flex-direction: column; gap: 8px; }
+.pkg-row {
+  background: var(--bark); border: 1px solid var(--edge); border-radius: 22px 4px 22px 4px;
+  padding: 18px 24px; font-size: 13px; color: var(--stone);
+  transform-origin: 0% 50%; will-change: transform, opacity;
+}
+.pkg-row:nth-child(even) { border-radius: 4px 22px 4px 22px; }
+.pkg-row strong { color: var(--lichen); font-weight: 500; }
 
-    .badge {
-      font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 2px 8px; border-radius: 6px;
-    }
-    .badge-store {
-      background: rgba(167,139,250,0.12);
-      color: var(--accent1);
-      border: 1px solid rgba(167,139,250,0.25);
-    }
-    .badge-oss {
-      background: rgba(56,189,248,0.08);
-      color: var(--accent2);
-      border: 1px solid rgba(56,189,248,0.2);
-    }
-    .badge-new {
-      background: rgba(74,222,128,0.1);
-      color: var(--new-green);
-      border: 1px solid rgba(74,222,128,0.25);
-      animation: glow-green 2s ease infinite;
-    }
-    @keyframes glow-green {
-      0%,100% { box-shadow: 0 0 0 rgba(74,222,128,0); }
-      50% { box-shadow: 0 0 10px rgba(74,222,128,0.3); }
-    }
+/* ── contact ───────────────────────────────────────────────── */
+#contact h2 {
+  font-family: var(--display); font-weight: 300;
+  font-variation-settings: 'SOFT' 90, 'WONK' 1, 'opsz' 144;
+  font-size: clamp(36px, 5.6vw, 58px); line-height: 1.06; letter-spacing: -1.2px; margin-bottom: 18px;
+  transform-origin: 0% 100%; will-change: transform, opacity;
+}
+#contact h2 em { font-style: italic; color: var(--dogrose); }
+#contact p { font-size: 14px; color: var(--stone); margin-bottom: 34px; will-change: transform, opacity; }
 
-    .project-desc { font-size: 13px; color: var(--muted); line-height: 1.65; margin-bottom: 8px; font-weight: 300; }
-    .project-bullets { list-style: none; display: flex; flex-direction: column; gap: 3px; }
-    .project-bullets li {
-      font-size: 12px; color: var(--subtle); padding-left: 16px; position: relative;
-    }
-    .project-bullets li::before {
-      content: '';
-      position: absolute; left: 0; top: 8px;
-      width: 4px; height: 4px; border-radius: 50%;
-      background: linear-gradient(135deg, var(--accent1), var(--accent2));
-    }
-    .project-link {
-      font-size: 12px; color: var(--accent1); font-weight: 500;
-      white-space: nowrap;
-      display: inline-flex; align-items: center; gap: 4px;
-      transition: all 0.15s;
-      padding: 6px 12px;
-      border-radius: 8px;
-      border: 1px solid rgba(167,139,250,0.2);
-      background: rgba(167,139,250,0.06);
-    }
-    .project-link:hover { background: rgba(167,139,250,0.14); border-color: rgba(167,139,250,0.4); }
-    .project-link-col { display: flex; flex-direction: column; gap: 6px; align-items: flex-end; }
+/* ── responsive ────────────────────────────────────────────── */
+@media (max-width: 780px) {
+  #track { height: 1150vh; }
+  #vine { width: 58px; }
+  .node .name { display: none; }
+  .node .leaf { width: 20px; height: 20px; }
+  .frame { padding: 84px 22px 84px 78px; }
+  #hud-name { left: 78px; font-size: 9px; }
+  #hud-frame { right: 22px; font-size: 9px; }
+  #hint { right: 22px; }
+  .deck { height: 400px; }
+  .card { padding: 26px 24px; border-radius: 30px 5px 30px 5px; }
+  .card-desc { max-width: 100%; }
+  .card .ord { top: 20px; right: 24px; }
+  .grid3 { grid-template-columns: 1fr; }
+}
 
-    /* Tools */
-    .tool-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-    .tool-card {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 14px; padding: 18px 20px;
-      transition: all 0.2s;
-      display: flex; flex-direction: column; gap: 5px;
-      backdrop-filter: blur(12px);
-    }
-    .tool-card:hover {
-      background: var(--glass-bg-hover);
-      border-color: var(--glass-border-bright);
-      transform: translateY(-2px);
-    }
-    .tool-name { font-size: 13px; font-weight: 500; color: var(--text); }
-    .tool-desc { font-size: 12px; color: var(--subtle); font-weight: 300; }
-
-    /* Skills */
-    .skills-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .skill-group {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 14px;
-      padding: 20px;
-      backdrop-filter: blur(12px);
-    }
-    .skill-group-title {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase;
-      background: linear-gradient(90deg, var(--accent1), var(--accent2));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-      margin-bottom: 12px;
-    }
-    .skill-items { display: flex; flex-direction: column; gap: 6px; }
-    .skill-row {
-      font-size: 13px; color: var(--muted); font-weight: 300;
-      display: flex; align-items: center; gap: 8px;
-    }
-    .skill-row::before {
-      content: ''; width: 3px; height: 3px; border-radius: 50%;
-      background: var(--accent1); flex-shrink: 0; opacity: 0.6;
-    }
-
-    /* Packages */
-    .pkg-list {
-      background: var(--glass-bg);
-      border: 1px solid var(--glass-border);
-      border-radius: 14px;
-      overflow: hidden;
-      backdrop-filter: blur(12px);
-    }
-    .pkg-row {
-      padding: 16px 20px;
-      font-size: 13px; color: var(--muted); font-weight: 300;
-      border-bottom: 1px solid var(--glass-border);
-      transition: background 0.15s;
-    }
-    .pkg-row:last-child { border-bottom: none; }
-    .pkg-row:hover { background: var(--glass-bg-hover); }
-    .pkg-row strong { color: var(--text); font-weight: 500; }
-
-    /* Contact */
-    .contact-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
-
-    /* Footer */
-    footer {
-      padding: 28px 40px;
-      border-top: 1px solid var(--glass-border);
-      display: flex; justify-content: space-between; align-items: center;
-      position: relative; z-index: 2;
-    }
-    .footer-text { font-size: 12px; color: var(--subtle); }
-
-    /* Divider */
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--glass-border), transparent);
-      margin: 0;
-    }
-
-    @media (max-width: 600px) {
-      nav { padding: 0 20px; }
-      .nav-links { display: none; }
-      .page { padding: 0 20px; }
-      .hero { padding: 56px 0 48px; }
-      .section { padding: 48px 0; }
-      .project { grid-template-columns: 1fr; }
-      .skills-cols { grid-template-columns: 1fr; }
-      .tool-grid { grid-template-columns: 1fr; }
-      footer { padding: 24px 20px; flex-direction: column; gap: 6px; text-align: center; }
-    }
-
-    .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.55s ease, transform 0.55s ease; }
-    .reveal.in { opacity: 1; transform: none; }
-  </style>
+/* ── reduced motion: a plain, quiet document ───────────────── */
+@media (prefers-reduced-motion: reduce) {
+  body { overflow: auto; }
+  #viewport { height: auto; overflow: visible; }
+  #track { height: auto; }
+  #stage { position: static; height: auto; overflow: visible; }
+  .frame { position: static; display: block; padding: 60px 40px; opacity: 1 !important; transform: none !important; visibility: visible !important; }
+  .frame-inner { margin: 0 auto; }
+  .deck { height: auto; display: flex; flex-direction: column; gap: 14px; }
+  .card { position: static; }
+  .card, .card *, .pill, .btn, .tile, .pkg-row, .head, h1 .w, .lede, .eyebrow, #contact h2, #contact p {
+    opacity: 1 !important; transform: none !important;
+  }
+  #vine, #hud-frame, #hint, .wash { display: none; }
+  #hud-name { position: static; display: block; padding: 40px 40px 0; }
+}
+</style>
 </head>
 <body>
 
-<div class="bg-orbs">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-  <div class="orb orb4"></div>
-</div>
+<div id="viewport">
+  <div id="track">
+    <div id="stage">
 
-<nav>
-  <span class="nav-name">Ashesh Patel</span>
-  <div class="nav-links">
-    <a href="#projects">Projects</a>
-    <a href="#skills">Skills</a>
-    <a href="#contact">Contact</a>
+      <div class="wash wash-a" data-drift="0.16"></div>
+      <div class="wash wash-b" data-drift="-0.22"></div>
+
+      <!-- growing vine -->
+      <div id="vine" aria-hidden="false">
+        <svg class="stem-svg" viewBox="0 0 100 1080" preserveAspectRatio="none">
+          <path id="stem-path" class="stem" pathLength="1"
+                d="M50 1000 C 33 908, 67 828, 50 736 C 33 644, 67 566, 50 474 C 34 384, 65 306, 50 214 C 37 134, 61 74, 53 30" />
+          <path class="root" pathLength="1" d="M50 1000 C 44 1024, 32 1036, 22 1064" />
+          <path class="root" pathLength="1" d="M50 1000 C 56 1026, 68 1038, 76 1068" />
+          <path class="root" pathLength="1" d="M50 1002 C 50 1030, 47 1046, 49 1074" />
+        </svg>
+      </div>
+
+      <!-- 01 · intro -->
+      <section class="frame" id="hero">
+        <div class="frame-inner">
+          <div class="eyebrow" data-el="hero-eyebrow">iOS developer · Toronto</div>
+          <h1 id="hero-title"></h1>
+          <p class="lede" data-el="hero-lede">Enterprise work in healthcare and agriculture — apps used by hundreds of professionals every day. Clean Swift architecture, real API integration, and on-device AI.</p>
+          <div class="pills" id="hero-pills"></div>
+          <div class="links" id="hero-links">
+            <a href="https://github.com/Asheshp23" target="_blank" rel="noopener" class="btn btn-seed">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              GitHub
+            </a>
+            <a href="https://linkedin.com/in/asheshp23" target="_blank" rel="noopener" class="btn btn-bare">LinkedIn</a>
+            <a href="mailto:asheshp23@gmail.com" class="btn btn-bare">Email</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- 02 · projects -->
+      <section class="frame" id="projects">
+        <div class="frame-inner">
+          <div class="head" data-el="proj-head">
+            <h2>Projects</h2>
+            <span class="count"><b id="proj-idx">01</b> of 06</span>
+          </div>
+          <div class="deck" id="deck"></div>
+        </div>
+      </section>
+
+      <!-- 03 · prompts -->
+      <section class="frame" id="tools">
+        <div class="frame-inner">
+          <div class="head" data-el="tools-head"><h2>AI prompt tools</h2><span class="count">gudprompt</span></div>
+          <div class="grid3" id="tools-grid"></div>
+        </div>
+      </section>
+
+      <!-- 04 · skills -->
+      <section class="frame" id="skills">
+        <div class="frame-inner">
+          <div class="head" data-el="skills-head"><h2>Technical skills</h2><span class="count">five areas</span></div>
+          <div class="grid3" id="skills-grid"></div>
+        </div>
+      </section>
+
+      <!-- 05 · packages -->
+      <section class="frame" id="packages">
+        <div class="frame-inner">
+          <div class="head" data-el="pkg-head"><h2>Enterprise Swift packages</h2><span class="count">internal</span></div>
+          <div class="pkg" id="pkg-list"></div>
+        </div>
+      </section>
+
+      <!-- 06 · contact -->
+      <section class="frame" id="contact">
+        <div class="frame-inner">
+          <h2 data-el="contact-h">Let's build something<br><em>worth tending.</em></h2>
+          <p data-el="contact-p">Open to iOS roles and contract work.</p>
+          <div class="links" id="contact-links">
+            <a href="mailto:asheshp23@gmail.com" class="btn btn-seed">asheshp23@gmail.com</a>
+            <a href="https://linkedin.com/in/asheshp23" target="_blank" rel="noopener" class="btn btn-bare">LinkedIn</a>
+            <a href="https://github.com/Asheshp23" target="_blank" rel="noopener" class="btn btn-bare">GitHub</a>
+          </div>
+        </div>
+      </section>
+
+      <div id="grain"></div>
+      <div class="hud" id="hud-name">Ashesh Patel</div>
+      <div class="hud" id="hud-frame">frame <b id="frame-num">0000</b> / 1000</div>
+      <div id="hint">scroll to grow</div>
+
+    </div>
   </div>
-</nav>
-
-<div class="page">
-
-  <div class="hero reveal">
-    <div class="hero-eyebrow"><span class="dot"></span>iOS Developer</div>
-    <h1>Building native iOS apps<br><em>people actually use.</em></h1>
-    <p class="hero-desc">
-      Enterprise experience in healthcare and agriculture, shipping apps used by hundreds of professionals daily. Focused on clean Swift architecture, API integration, and on-device AI.
-    </p>
-    <div class="hero-stack">
-      <span class="pill">Swift</span>
-      <span class="pill">SwiftUI</span>
-      <span class="pill">MVVM</span>
-      <span class="pill">Firebase</span>
-      <span class="pill">On-Device AI</span>
-      <span class="pill">MapKit</span>
-      <span class="pill">Swift Package Manager</span>
-    </div>
-    <div class="hero-links">
-      <a href="https://github.com/Asheshp23" target="_blank" class="btn btn-primary">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-        GitHub
-      </a>
-      <a href="https://linkedin.com/in/asheshp23" target="_blank" class="btn btn-outline">LinkedIn</a>
-      <a href="mailto:asheshp23@gmail.com" class="btn btn-outline">Email</a>
-    </div>
-  </div>
-
-  <div class="section-divider"></div>
-
-  <section class="section" id="projects">
-    <div class="section-header reveal">
-      <h2 class="section-title">Projects</h2>
-      <span class="section-count">6 apps</span>
-    </div>
-    <div class="project-list">
-
-      <div class="project reveal">
-        <div>
-          <div class="project-header">
-            <span class="project-name">Mindful Prism</span>
-            <span class="badge badge-store">App Store</span>
-            <span class="badge badge-new">New</span>
-          </div>
-          <p class="project-desc">AI-powered reflection tool that helps you untangle your thoughts. Write what is on your mind - Apple Intelligence helps you see it differently. Fully on-device, completely private.</p>
-          <ul class="project-bullets">
-            <li>Built on Apple Intelligence via FoundationModels - no cloud, no backend</li>
-            <li>On-device processing ensures complete user privacy</li>
-            <li>Designed for clarity in moments when your mind will not quiet down</li>
-          </ul>
-        </div>
-        <a href="https://apps.apple.com/us/app/mindful-prism/id6772832020" target="_blank" class="project-link">
-          App Store <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
-        </a>
-      </div>
-
-      <div class="project reveal">
-        <div>
-          <div class="project-header">
-            <span class="project-name">WiDonate</span>
-            <span class="badge badge-store">App Store</span>
-          </div>
-          <p class="project-desc">Charitable giving platform enabling round-up donations with each purchase, supporting nonprofits and athletic programs.</p>
-          <ul class="project-bullets">
-            <li>Seamless payment integration for frictionless micro-donations</li>
-            <li>Intuitive UX for effortless charitable contributions</li>
-          </ul>
-        </div>
-        <a href="https://apps.apple.com/us/app/widonate/id6752963961" target="_blank" class="project-link">
-          App Store <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
-        </a>
-      </div>
-
-      <div class="project reveal">
-        <div>
-          <div class="project-header">
-            <span class="project-name">Deveron Field Ops</span>
-            <span class="badge badge-store">App Store</span>
-          </div>
-          <p class="project-desc">Agriculture field management application serving 500+ farms with real-time mapping and data collection tools.</p>
-          <ul class="project-bullets">
-            <li>Integrated MapKit and built custom Swift packages</li>
-            <li>Reduced app build times by 30% through dependency optimization</li>
-          </ul>
-        </div>
-        <a href="https://apps.apple.com/us/app/deveron-field-ops/id1589186774" target="_blank" class="project-link">
-          App Store <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
-        </a>
-      </div>
-
-      <div class="project reveal">
-        <div>
-          <div class="project-header">
-            <span class="project-name">Deveron Lab Ops</span>
-            <span class="badge badge-store">App Store</span>
-          </div>
-          <p class="project-desc">Laboratory workflow management for agricultural testing facilities with real-time data sync.</p>
-          <ul class="project-bullets">
-            <li>RESTful API integration and real-time data synchronization</li>
-            <li>Automated testing pipeline for production reliability</li>
-          </ul>
-        </div>
-        <a href="https://apps.apple.com/us/app/deveron-lab-ops/id1600213314" target="_blank" class="project-link">
-          App Store <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
-        </a>
-      </div>
-
-      <div class="project reveal">
-        <div>
-          <div class="project-header">
-            <span class="project-name">JournalAI &amp; JournalAnalyzer</span>
-            <span class="badge badge-oss">Open Source</span>
-          </div>
-          <p class="project-desc">Privacy-focused journaling with on-device AI analysis - no cloud dependencies, all processing stays on device.</p>
-          <ul class="project-bullets">
-            <li>Local LLM processing for complete user privacy</li>
-            <li>AI-powered entry enhancement and mood analysis</li>
-          </ul>
-        </div>
-        <div class="project-link-col">
-          <a href="https://github.com/Asheshp23/JournalAI" target="_blank" class="project-link">JournalAI <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg></a>
-          <a href="https://github.com/Asheshp23/JournalAnalyzer" target="_blank" class="project-link">JournalAnalyzer <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg></a>
-        </div>
-      </div>
-
-      <div class="project reveal">
-        <div>
-          <div class="project-header">
-            <span class="project-name">HearingTestApp</span>
-            <span class="badge badge-oss">Open Source</span>
-          </div>
-          <p class="project-desc">Medical-grade audiometry testing for healthcare professionals with clinically calibrated audio processing.</p>
-          <ul class="project-bullets">
-            <li>Real-time audio processing with AVAudioEngine</li>
-            <li>Calibrated frequency response for clinical accuracy</li>
-          </ul>
-        </div>
-        <a href="https://github.com/Asheshp23/Hearing-Test-App" target="_blank" class="project-link">
-          GitHub <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>
-        </a>
-      </div>
-
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section class="section" id="tools">
-    <div class="section-header reveal">
-      <h2 class="section-title">AI prompt tools</h2>
-    </div>
-    <div class="tool-grid">
-      <a href="https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140" target="_blank" class="tool-card reveal">
-        <span class="tool-name">SwiftPromptKit</span>
-        <span class="tool-desc">Swift code generation prompts for iOS developers</span>
-      </a>
-      <a href="https://gudprompt.com/c/prompts-for-meditation-92835967" target="_blank" class="tool-card reveal">
-        <span class="tool-name">Guided Meditation</span>
-        <span class="tool-desc">Mindfulness and meditation prompt collection</span>
-      </a>
-      <a href="https://gudprompt.com/c/breath-work-exercises-44565957" target="_blank" class="tool-card reveal">
-        <span class="tool-name">Breath Work Essentials</span>
-        <span class="tool-desc">Stress relief and breathwork exercise prompts</span>
-      </a>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section class="section" id="skills">
-    <div class="section-header reveal">
-      <h2 class="section-title">Technical skills</h2>
-    </div>
-    <div class="skills-cols">
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Language &amp; UI</div>
-        <div class="skill-items">
-          <div class="skill-row">Swift &amp; SwiftUI</div>
-          <div class="skill-row">UIKit</div>
-          <div class="skill-row">Combine &amp; async/await</div>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Architecture</div>
-        <div class="skill-items">
-          <div class="skill-row">MVVM, Clean Architecture</div>
-          <div class="skill-row">Swift Package Manager</div>
-          <div class="skill-row">Dependency injection</div>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Backend &amp; Data</div>
-        <div class="skill-items">
-          <div class="skill-row">Firebase</div>
-          <div class="skill-row">RESTful APIs, GraphQL</div>
-          <div class="skill-row">Socket.IO, Core Data</div>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-title">Testing &amp; Performance</div>
-        <div class="skill-items">
-          <div class="skill-row">Unit &amp; UI testing</div>
-          <div class="skill-row">CI/CD pipelines</div>
-          <div class="skill-row">Memory &amp; build optimization</div>
-        </div>
-      </div>
-      <div class="skill-group reveal">
-        <div class="skill-group-title">iOS Frameworks</div>
-        <div class="skill-items">
-          <div class="skill-row">MapKit</div>
-          <div class="skill-row">AVAudioEngine, HealthKit</div>
-          <div class="skill-row">Foundation Models (on-device AI)</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section class="section">
-    <div class="section-header reveal">
-      <h2 class="section-title">Enterprise Swift packages</h2>
-    </div>
-    <div class="pkg-list reveal">
-      <div class="pkg-row"><strong>OAuth 2.0 Salesforce wrapper</strong> - Authentication package for Salesforce integration</div>
-      <div class="pkg-row"><strong>RESTful networking layer</strong> - API client with structured error handling and retry logic</div>
-      <div class="pkg-row"><strong>MapKit utilities</strong> - Location-based helpers and annotation management for field apps</div>
-    </div>
-  </section>
-
-  <div class="section-divider"></div>
-
-  <section class="section" id="contact" style="padding-bottom: 90px;">
-    <div class="section-header reveal">
-      <h2 class="section-title">Get in touch</h2>
-    </div>
-    <div class="contact-row reveal">
-      <a href="mailto:asheshp23@gmail.com" class="btn btn-primary">asheshp23@gmail.com</a>
-      <a href="https://linkedin.com/in/asheshp23" target="_blank" class="btn btn-outline">LinkedIn</a>
-      <a href="https://github.com/Asheshp23" target="_blank" class="btn btn-outline">GitHub</a>
-    </div>
-  </section>
-
 </div>
-
-<footer>
-  <span class="footer-text">Ashesh Patel - iOS Developer</span>
-  <span class="footer-text">asheshp23.github.io</span>
-</footer>
 
 <script>
-  const els = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver(entries => {
-    entries.forEach((e, i) => {
-      if (e.isIntersecting) {
-        setTimeout(() => e.target.classList.add('in'), i * 60);
-        io.unobserve(e.target);
-      }
+(() => {
+  'use strict';
+
+  /* ── content ─────────────────────────────────────────────── */
+  const LINE_A = ['Building', 'native', 'iOS', 'apps'];
+  const LINE_B = ['people', 'actually', 'use.'];
+  const STACK = ['Swift', 'SwiftUI', 'MVVM', 'Firebase', 'On-Device AI', 'MapKit', 'Swift Package Manager'];
+
+  const PROJECTS = [
+    { name: 'Mindful Prism', tags: [['App Store','store'], ['new','new']],
+      desc: 'AI-powered reflection tool that helps you untangle your thoughts. Write what is on your mind — Apple Intelligence helps you see it differently. Fully on-device, completely private.',
+      bullets: ['Built on Apple Intelligence via FoundationModels — no cloud, no backend', 'On-device processing ensures complete user privacy', 'Designed for clarity when your mind will not quiet down'],
+      links: [['App Store', 'https://apps.apple.com/us/app/mindful-prism/id6772832020']] },
+    { name: 'WiDonate', tags: [['App Store','store']],
+      desc: 'Charitable giving platform enabling round-up donations with each purchase, supporting nonprofits and athletic programs.',
+      bullets: ['Seamless payment integration for frictionless micro-donations', 'Intuitive UX for effortless charitable contributions'],
+      links: [['App Store', 'https://apps.apple.com/us/app/widonate/id6752963961']] },
+    { name: 'Deveron Field Ops', tags: [['App Store','store']],
+      desc: 'Agriculture field management application serving 500+ farms with real-time mapping and data collection tools.',
+      bullets: ['Integrated MapKit and built custom Swift packages', 'Reduced app build times by 30% through dependency optimization'],
+      links: [['App Store', 'https://apps.apple.com/us/app/deveron-field-ops/id1589186774']] },
+    { name: 'Deveron Lab Ops', tags: [['App Store','store']],
+      desc: 'Laboratory workflow management for agricultural testing facilities with real-time data sync.',
+      bullets: ['RESTful API integration and real-time data synchronization', 'Automated testing pipeline for production reliability'],
+      links: [['App Store', 'https://apps.apple.com/us/app/deveron-lab-ops/id1600213314']] },
+    { name: 'JournalAI & JournalAnalyzer', tags: [['open source','oss']],
+      desc: 'Privacy-focused journaling with on-device AI analysis — no cloud dependencies, all processing stays on device.',
+      bullets: ['Local LLM processing for complete user privacy', 'AI-powered entry enhancement and mood analysis'],
+      links: [['JournalAI', 'https://github.com/Asheshp23/JournalAI'], ['JournalAnalyzer', 'https://github.com/Asheshp23/JournalAnalyzer']] },
+    { name: 'HearingTestApp', tags: [['open source','oss']],
+      desc: 'Medical-grade audiometry testing for healthcare professionals with clinically calibrated audio processing.',
+      bullets: ['Real-time audio processing with AVAudioEngine', 'Calibrated frequency response for clinical accuracy'],
+      links: [['GitHub', 'https://github.com/Asheshp23/Hearing-Test-App']] }
+  ];
+
+  const TOOLS = [
+    { name: 'SwiftPromptKit', desc: 'Swift code generation prompts for iOS developers', url: 'https://gudprompt.com/c/swiftassist-ios-developer-s-ai-12009140' },
+    { name: 'Guided Meditation', desc: 'Mindfulness and meditation prompt collection', url: 'https://gudprompt.com/c/prompts-for-meditation-92835967' },
+    { name: 'Breath Work Essentials', desc: 'Stress relief and breathwork exercise prompts', url: 'https://gudprompt.com/c/breath-work-exercises-44565957' }
+  ];
+
+  const SKILLS = [
+    ['Language & UI', ['Swift & SwiftUI', 'UIKit', 'Combine & async/await']],
+    ['Architecture', ['MVVM, Clean Architecture', 'Swift Package Manager', 'Dependency injection']],
+    ['Backend & Data', ['Firebase', 'RESTful APIs, GraphQL', 'Socket.IO, Core Data']],
+    ['Testing & Performance', ['Unit & UI testing', 'CI/CD pipelines', 'Memory & build optimization']],
+    ['iOS Frameworks', ['MapKit', 'AVAudioEngine, HealthKit', 'Foundation Models (on-device AI)']]
+  ];
+
+  const PACKAGES = [
+    ['OAuth 2.0 Salesforce wrapper', 'Authentication package for Salesforce integration'],
+    ['RESTful networking layer', 'API client with structured error handling and retry logic'],
+    ['MapKit utilities', 'Location helpers and annotation management for field apps']
+  ];
+
+  /* ── timeline (frame space 0…1000) ───────────────────────── */
+  const FRAMES = 1000;
+  const CHAPTERS = [
+    { name: 'intro',    a: 0,   b: 170 },
+    { name: 'projects', a: 170, b: 640 },
+    { name: 'prompts',  a: 640, b: 762 },
+    { name: 'skills',   a: 762, b: 880 },
+    { name: 'packages', a: 880, b: 952 },
+    { name: 'contact',  a: 952, b: 1000 }
+  ];
+  const CARD_SPAN = (640 - 170) / PROJECTS.length;
+
+  /* ── helpers ─────────────────────────────────────────────── */
+  const clamp = (v, lo = 0, hi = 1) => v < lo ? lo : v > hi ? hi : v;
+  const span = (f, a, b) => clamp((f - a) / (b - a));
+  const outCubic = t => 1 - Math.pow(1 - t, 3);
+  const inCubic = t => t * t * t;
+  const outBack = t => { const c = 1.35; return 1 + (c + 1) * Math.pow(t - 1, 3) + c * Math.pow(t - 1, 2); };
+  const mix = (a, b, t) => a + (b - a) * t;
+  const pad = (n, w) => String(n).padStart(w, '0');
+  // deterministic, tiny irregularities — nothing in a plant is straight
+  const jitter = i => ((Math.sin(i * 12.9898) * 43758.5453) % 1 + 1) % 1 - 0.5;
+
+  const $ = s => document.querySelector(s);
+  const el = (tag, cls, html) => { const n = document.createElement(tag); if (cls) n.className = cls; if (html != null) n.innerHTML = html; return n; };
+  const svgLeaf = () => '<svg class="leaf" viewBox="0 0 24 26" fill="none" aria-hidden="true"><path d="M12 25C3.5 18.5 3 8.5 12 1c9 7.5 8.5 17.5 0 24z" stroke-linejoin="round"/><line x1="12" y1="2" x2="12" y2="24"/></svg>';
+
+  /* ── build ───────────────────────────────────────────────── */
+  const title = $('#hero-title');
+  const words = [];
+  LINE_A.forEach(w => { const s = el('span', 'w', w); title.append(s, document.createTextNode(' ')); words.push(s); });
+  title.append(el('br'));
+  const em = el('em');
+  LINE_B.forEach(w => { const s = el('span', 'w', w); em.append(s, document.createTextNode(' ')); words.push(s); });
+  title.append(em);
+
+  const pills = STACK.map(t => { const n = el('span', 'pill', t); $('#hero-pills').append(n); return n; });
+  const heroBtns = [...$('#hero-links').children];
+  const heroEyebrow = document.querySelector('[data-el="hero-eyebrow"]');
+  const heroLede = document.querySelector('[data-el="hero-lede"]');
+
+  const deck = $('#deck');
+  const cards = PROJECTS.map((p, i) => {
+    const c = el('div', 'card');
+    c.append(el('span', 'ord', pad(i + 1, 2)));
+    const top = el('div', 'card-top');
+    top.append(el('span', 'card-name', p.name));
+    p.tags.forEach(([t, k]) => top.append(el('span', 'tag tag-' + k, t)));
+    c.append(top, el('p', 'card-desc', p.desc));
+    const ul = el('ul', 'card-bullets');
+    const lis = p.bullets.map(b => { const li = el('li', null, b); ul.append(li); return li; });
+    c.append(ul);
+    const lw = el('div', 'card-links');
+    p.links.forEach(([t, u]) => {
+      const a = el('a', 'card-link', t + ' <svg width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M2.5 9.5l7-7M4 2.5h5.5v5.5"/></svg>');
+      a.href = u; a.target = '_blank'; a.rel = 'noopener'; lw.append(a);
     });
-  }, { threshold: 0.05 });
-  els.forEach(el => io.observe(el));
+    c.append(lw);
+    deck.append(c);
+    return { root: c, lis };
+  });
+
+  const tools = TOOLS.map(t => {
+    const a = el('a', 'tile');
+    a.href = t.url; a.target = '_blank'; a.rel = 'noopener';
+    a.append(el('span', 'tile-name', t.name), el('span', 'tile-desc', t.desc));
+    $('#tools-grid').append(a);
+    return a;
+  });
+
+  const skillTiles = SKILLS.map(([g, rows]) => {
+    const d = el('div', 'tile');
+    d.append(el('div', 'tile-title', g));
+    rows.forEach(r => d.append(el('div', 'tile-row', r)));
+    $('#skills-grid').append(d);
+    return d;
+  });
+
+  const pkgRows = PACKAGES.map(([n, d]) => {
+    const r = el('div', 'pkg-row', '<strong>' + n + '</strong> — ' + d);
+    $('#pkg-list').append(r);
+    return r;
+  });
+
+  /* ── vine nodes, placed on the stem itself ───────────────── */
+  const viewport = $('#viewport'), track = $('#track'), vine = $('#vine');
+  const stemPath = $('#stem-path');
+  const roots = [...document.querySelectorAll('.root')];
+  const VB_W = 100, VB_H = 1080;
+
+  // stem is drawn from frame 0 → 960; a node at frame f sits at that
+  // fraction of the stem, so vertical position encodes real duration
+  const STEM_END = 960;
+  const stemLen = stemPath.getTotalLength();
+
+  const nodes = CHAPTERS.map((ch, i) => {
+    const frac = clamp(ch.a / STEM_END);
+    const pt = stemPath.getPointAtLength(stemLen * frac);
+    const b = el('button', 'node');
+    b.type = 'button';
+    b.setAttribute('aria-label', 'Go to ' + ch.name);
+    b.style.left = (pt.x / VB_W * 100) + '%';
+    b.style.top = (pt.y / VB_H * 100) + '%';
+    b.append(el('span', 'seed'));
+    b.insertAdjacentHTML('beforeend', svgLeaf());
+    b.append(el('span', 'name', ch.name));
+    b.addEventListener('click', () => scrollToFrame(ch.a + (ch.b - ch.a) * 0.3));
+    vine.append(b);
+    const leaf = b.querySelector('.leaf');
+    leaf.style.transformOrigin = '12px 25px';
+    return { root: b, seed: b.querySelector('.seed'), leaf, label: b.querySelector('.name'), frame: ch.a, tilt: 26 + jitter(i) * 34 };
+  });
+
+  // blossom at the growing tip
+  const tip = stemPath.getPointAtLength(stemLen);
+  const bloom = el('div');
+  bloom.id = 'bloom';
+  bloom.style.left = (tip.x / VB_W * 100) + '%';
+  bloom.style.top = (tip.y / VB_H * 100) + '%';
+  bloom.innerHTML = '<svg width="34" height="34" viewBox="0 0 34 34" aria-hidden="true">' +
+    [0, 60, 120, 180, 240, 300].map(a =>
+      '<ellipse cx="17" cy="9.5" rx="4.6" ry="7.4" transform="rotate(' + a + ' 17 17)" fill="rgba(208,145,162,0.30)" stroke="#d091a2" stroke-width="1"/>'
+    ).join('') + '<circle cx="17" cy="17" r="3.1" fill="#e0b25e"/></svg>';
+  vine.append(bloom);
+
+  const washes = [...document.querySelectorAll('.wash')];
+  const frames = { hero: $('#hero'), projects: $('#projects'), tools: $('#tools'), skills: $('#skills'), packages: $('#packages'), contact: $('#contact') };
+  const heads = {
+    proj: document.querySelector('[data-el="proj-head"]'),
+    tools: document.querySelector('[data-el="tools-head"]'),
+    skills: document.querySelector('[data-el="skills-head"]'),
+    pkg: document.querySelector('[data-el="pkg-head"]')
+  };
+  const contactH = document.querySelector('[data-el="contact-h"]');
+  const contactP = document.querySelector('[data-el="contact-p"]');
+  const contactBtns = [...$('#contact-links').children];
+  const frameNum = $('#frame-num'), projIdx = $('#proj-idx'), hint = $('#hint');
+
+  /* ── setters ─────────────────────────────────────────────── */
+  const set = (n, o, t) => { n.style.opacity = o; n.style.transform = t; };
+  function rise(n, t, dist = 20) { const e = outCubic(t); set(n, e, 'translate3d(0,' + mix(dist, 0, e).toFixed(2) + 'px,0)'); }
+  function showFrame(n, on, o, t) {
+    n.style.visibility = on ? 'visible' : 'hidden';
+    n.style.pointerEvents = on ? 'auto' : 'none';
+    n.style.opacity = on ? o : 0;
+    if (on) n.style.transform = t;
+  }
+
+  /* ── render: one frame in, one full layout out ───────────── */
+  function render(f) {
+    const p = f / FRAMES;
+
+    washes.forEach(w => {
+      const d = parseFloat(w.dataset.drift);
+      w.style.transform = 'translate3d(' + (p * 180 * d).toFixed(1) + 'px,' + (p * -300 * d).toFixed(1) + 'px,0)';
+    });
+
+    /* the vine grows */
+    {
+      const g = span(f, 0, STEM_END);
+      stemPath.style.strokeDashoffset = (1 - g).toFixed(4);
+      roots.forEach((r, i) => {
+        const rt = outCubic(span(f, 4 + i * 9, 4 + i * 9 + 46));
+        r.style.strokeDashoffset = (1 - rt).toFixed(4);
+      });
+      nodes.forEach((n, i) => {
+        const u = outCubic(span(f, n.frame - 6, n.frame + 46));   // leaf unfurls as the stem passes
+        n.seed.style.transform = 'scale(' + mix(0.3, 1, outCubic(span(f, n.frame - 10, n.frame + 14))).toFixed(3) + ')';
+        n.leaf.style.opacity = u.toFixed(3);
+        n.leaf.style.transform = 'rotate(' + mix(-14, n.tilt, u).toFixed(2) + 'deg) scale(' + mix(0.1, 1, u).toFixed(3) + ')';
+        const active = f >= CHAPTERS[i].a && f < CHAPTERS[i].b;
+        n.label.style.opacity = active ? 1 : Math.min(0.28, u * 0.28);
+        n.label.style.color = active ? 'var(--moss)' : 'var(--stone)';
+      });
+      const bl = outBack(span(f, 946, 1000));
+      bloom.style.opacity = clamp(span(f, 946, 990)).toFixed(3);
+      bloom.style.transform = 'translate(-50%,-50%) scale(' + clamp(bl, 0, 1.2).toFixed(3) + ') rotate(' + mix(-30, 0, clamp(bl)).toFixed(1) + 'deg)';
+    }
+
+    /* 01 intro */
+    {
+      const t = span(f, 0, 170);
+      const out = inCubic(span(t, 0.86, 1));
+      const on = t < 1;
+      showFrame(frames.hero, on, 1 - out, 'translate3d(0,' + (out * -46).toFixed(1) + 'px,0)');
+      if (on) {
+        rise(heroEyebrow, span(t, 0.02, 0.12), 14);
+        words.forEach((w, i) => {
+          const wt = outCubic(span(t, 0.05 + i * 0.03, 0.05 + i * 0.03 + 0.15));
+          set(w, wt, 'translate3d(0,' + mix(30, 0, wt).toFixed(2) + 'px,0) scaleY(' + mix(0.62, 1, wt).toFixed(3) + ') rotate(' + mix(jitter(i) * 6, 0, wt).toFixed(2) + 'deg)');
+        });
+        rise(heroLede, span(t, 0.36, 0.52), 18);
+        pills.forEach((n, i) => {
+          const pt = outCubic(span(t, 0.46 + i * 0.017, 0.46 + i * 0.017 + 0.10));
+          set(n, pt, 'scale(' + mix(0.7, 1, pt).toFixed(3) + ') rotate(' + mix(jitter(i + 7) * 9, 0, pt).toFixed(2) + 'deg)');
+        });
+        heroBtns.forEach((n, i) => rise(n, span(t, 0.64 + i * 0.035, 0.78 + i * 0.035), 16));
+        hint.style.opacity = (1 - span(t, 0.05, 0.18)).toFixed(3);
+      }
+    }
+
+    /* 02 projects — leaves unfurl in, wilt out */
+    {
+      const on = f >= 160 && f < 660;
+      showFrame(frames.projects, on, 1, 'none');
+      if (on) {
+        const ht = outCubic(span(f, 168, 198));
+        set(heads.proj, (ht * (1 - span(f, 630, 656))).toFixed(3), 'translate3d(0,' + mix(18, 0, ht).toFixed(2) + 'px,0)');
+        let active = 0;
+        cards.forEach((c, i) => {
+          const a = 170 + i * CARD_SPAN, b = a + CARD_SPAN;
+          const lp = span(f, a - 8, b + 8);
+          const grow = outCubic(span(lp, 0, 0.26));
+          const wilt = inCubic(span(lp, 0.76, 1));
+          const o = grow * (1 - wilt);
+          if (o > 0.5) active = i;
+          if (o < 0.005) { c.root.style.visibility = 'hidden'; c.root.style.pointerEvents = 'none'; c.root.style.opacity = 0; return; }
+          c.root.style.visibility = 'visible';
+          c.root.style.pointerEvents = o > 0.85 ? 'auto' : 'none';
+          c.root.style.opacity = o.toFixed(3);
+          const sx = mix(0.90, 1, grow), sy = mix(0.94, 1, grow) * mix(1, 0.97, wilt);
+          const rot = mix(-2.4, 0, grow) + mix(0, 2.8, wilt);
+          const ty = mix(14, 0, grow) + mix(0, 30, wilt);
+          c.root.style.transform = 'translate3d(0,' + ty.toFixed(1) + 'px,0) scale(' + sx.toFixed(4) + ',' + sy.toFixed(4) + ') rotate(' + rot.toFixed(2) + 'deg)';
+          c.lis.forEach((li, j) => {
+            const bt = outCubic(span(lp, 0.22 + j * 0.055, 0.22 + j * 0.055 + 0.15));
+            set(li, (bt * (1 - wilt)).toFixed(3), 'translate3d(' + mix(14, 0, bt).toFixed(2) + 'px,0,0)');
+          });
+        });
+        projIdx.textContent = pad(active + 1, 2);
+      }
+    }
+
+    /* 03 prompts */
+    {
+      const t = span(f, 640, 762), on = f >= 632 && f < 770;
+      const out = inCubic(span(t, 0.84, 1));
+      showFrame(frames.tools, on, 1 - out, 'translate3d(0,' + (out * -40).toFixed(1) + 'px,0)');
+      if (on) {
+        const ht = outCubic(span(t, 0.02, 0.18));
+        set(heads.tools, ht, 'translate3d(0,' + mix(18, 0, ht).toFixed(2) + 'px,0)');
+        tools.forEach((n, i) => {
+          const tt = outCubic(span(t, 0.18 + i * 0.10, 0.18 + i * 0.10 + 0.24));
+          set(n, tt, 'translate3d(0,' + mix(22, 0, tt).toFixed(2) + 'px,0) scale(' + mix(0.86, 1, tt).toFixed(3) + ') rotate(' + mix(jitter(i + 3) * 5, 0, tt).toFixed(2) + 'deg)');
+        });
+      }
+    }
+
+    /* 04 skills */
+    {
+      const t = span(f, 762, 880), on = f >= 756 && f < 888;
+      const out = inCubic(span(t, 0.86, 1));
+      showFrame(frames.skills, on, 1 - out, 'translate3d(0,' + (out * -40).toFixed(1) + 'px,0)');
+      if (on) {
+        const ht = outCubic(span(t, 0.02, 0.18));
+        set(heads.skills, ht, 'translate3d(0,' + mix(18, 0, ht).toFixed(2) + 'px,0)');
+        skillTiles.forEach((n, i) => {
+          const tt = outCubic(span(t, 0.14 + i * 0.075, 0.14 + i * 0.075 + 0.22));
+          set(n, tt, 'translate3d(0,' + mix(20, 0, tt).toFixed(2) + 'px,0) scale(' + mix(0.88, 1, tt).toFixed(3) + ') rotate(' + mix(jitter(i + 11) * 5, 0, tt).toFixed(2) + 'deg)');
+        });
+      }
+    }
+
+    /* 05 packages */
+    {
+      const t = span(f, 880, 952), on = f >= 874 && f < 960;
+      const out = inCubic(span(t, 0.84, 1));
+      showFrame(frames.packages, on, 1 - out, 'translate3d(0,' + (out * -40).toFixed(1) + 'px,0)');
+      if (on) {
+        const ht = outCubic(span(t, 0.02, 0.20));
+        set(heads.pkg, ht, 'translate3d(0,' + mix(18, 0, ht).toFixed(2) + 'px,0)');
+        pkgRows.forEach((n, i) => {
+          const tt = outCubic(span(t, 0.18 + i * 0.14, 0.18 + i * 0.14 + 0.28));
+          set(n, tt, 'translate3d(' + mix(-22, 0, tt).toFixed(2) + 'px,0,0) scaleX(' + mix(0.94, 1, tt).toFixed(3) + ')');
+        });
+      }
+    }
+
+    /* 06 contact — the bloom */
+    {
+      const t = span(f, 946, 1000), on = f >= 944;
+      showFrame(frames.contact, on, 1, 'none');
+      if (on) {
+        const ht = clamp(outBack(span(t, 0.05, 0.50)), 0, 1.1);
+        set(contactH, clamp(span(t, 0.05, 0.35)).toFixed(3), 'scale(' + mix(0.9, 1, ht).toFixed(3) + ') rotate(' + mix(-1.6, 0, clamp(ht)).toFixed(2) + 'deg)');
+        rise(contactP, span(t, 0.32, 0.62), 18);
+        contactBtns.forEach((n, i) => rise(n, span(t, 0.48 + i * 0.09, 0.70 + i * 0.09), 16));
+      }
+    }
+
+    frameNum.textContent = pad(Math.round(f), 4);
+  }
+
+  /* ── scroll → frame, quantised ───────────────────────────── */
+  let last = -1, queued = false;
+
+  function currentFrame() {
+    const max = track.scrollHeight - viewport.clientHeight;
+    if (max <= 0) return 0;
+    return Math.round(clamp(viewport.scrollTop / max) * FRAMES);
+  }
+  function tick() {
+    queued = false;
+    const f = currentFrame();
+    if (f === last) return;
+    last = f;
+    render(f);
+  }
+  function onScroll() { if (!queued) { queued = true; requestAnimationFrame(tick); } }
+  function scrollToFrame(f) {
+    const max = track.scrollHeight - viewport.clientHeight;
+    viewport.scrollTo({ top: (f / FRAMES) * max, behavior: 'smooth' });
+  }
+
+  viewport.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', () => { last = -1; tick(); });
+  window.addEventListener('keydown', e => {
+    const step = { ArrowDown: 12, ArrowUp: -12, PageDown: 60, PageUp: -60 }[e.key];
+    if (step == null) return;
+    if (document.activeElement && document.activeElement.tagName === 'BUTTON') return;
+    e.preventDefault();
+    scrollToFrame(clamp(currentFrame() + step, 0, FRAMES));
+  });
+
+  render(0);
+})();
 </script>
 </body>
 </html>
